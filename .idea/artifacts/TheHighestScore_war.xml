@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TheHighestScore:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="TheHighestScore.war">
+      <element id="artifact" artifact-name="TheHighestScore:war exploded" />
+    </root>
+  </artifact>
+</component>

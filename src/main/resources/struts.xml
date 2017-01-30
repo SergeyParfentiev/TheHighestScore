@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--<constant name="struts.url.includeParams" value="none"/>-->
+    <constant name="struts.devMode" value="true"/>
+    <package name="default" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="authenticationInterceptor" class="action.AuthenticationInterceptor"/>
+            <interceptor-stack name="secureStack">
+                <interceptor-ref name="authenticationInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <action name="login">
+            <result>/login.jsp</result>
+        </action>
+
+        <action name="loginAction" class="action.Login" method="checkLogin">
+            <!--<interceptor-ref name="secureStack"/>-->
+            <result name="success" type="redirectAction">
+                <param name="actionName">showCountryList</param>
+            </result>
+            <result name="login">/login.jsp</result>
+        </action>
+
+        <action name="logout" class="action.Logout">
+            <result name="success" type="redirectAction">
+                <param name="actionName">login</param>
+            </result>
+        </action>
+
+        <action name="showCountryList" class="action.CountryList" method="showCountries">
+            <interceptor-ref name="secureStack"/>
+            <result name="success">/countries.jsp</result>
+            <result name="login">/login.jsp</result>
+        </action>
+
+        <action name="showOrders" class="action.FillTable" method="showOrders">
+            <interceptor-ref name="secureStack"/>
+            <result name="success">/orders.jsp</result>
+            <result name="login"/>
+        </action>
+        <action name="ajaxdemo" class="action.AjaxAutocomplete">
+            <interceptor-ref name="secureStack"/>
+            <result name="success">/ajaxdemo.jsp</result>
+            <result name="login">/login.jsp</result>
+            <!--<result type="tiles">/ajaxdemo.tiles</result>-->
+        </action>
+    </package>
+</struts>
